@@ -1,0 +1,25 @@
+    // The page's two faces (front_camera.js): opened from "Front Camera" it is titled so and shows our rows; opened
+    // from Ford's "Rear View Camera" it is Ford's page and our rows are hidden. Looked at when the page is built, when
+    // it is shown, and four times a second while it is showing (SYNC may keep the page or build it anew each time).
+    // Our rows bind their "visible" to frontCameraPage.front.
+    Item {
+        id: frontCameraPage
+        objectName: "RVCSettings_frontCameraPage"
+        visible: false
+        property bool front: false
+        property bool applied: false
+        function apply() {
+            var f = FrontCamera.front === true;
+            if (applied && f === front) return;
+            front = f; applied = true;
+            root.titleText = f ? "Front Camera" : qsTr("Camera Settings", "titleText");
+            rearCameraDelay.visible = !f;
+            var k = frontCameraPage.parent ? frontCameraPage.parent.children : [];
+            for (var i = 0; i < k.length; i++) if (k[i].objectName === "RVCSettings_item1") k[i].visible = !f;   // Ford's preview picture
+        }
+        Component.onCompleted: apply()
+        // (only while the page is showing: SYNC may keep the page for good, and a timer that never stops is work on
+        // the screen's own thread for nothing)
+        Connections { target: root; onVisibleChanged: if (root.visible) frontCameraPage.apply() }
+        Timer { interval: 250; repeat: true; running: root.visible; onTriggered: frontCameraPage.apply() }
+    }

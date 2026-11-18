@@ -1,0 +1,48 @@
+            // front tire guides switch. Added by the Front Tire Guides installer, removed by its uninstaller.
+            // One more button in Ford's camera view row, on front views only: lit (Ford's selected look) = guides on.
+            // The choice is kept in /fs/rwdata/frontguides/switch.json ({"guides": false} = off; no file = on),
+            // which the program reads ten times a second and passes on to the layer.
+            HmiAction {
+                id: frontGuidesSwitch
+                objectName: "CameraViewButtons_frontGuides"
+
+                property bool guidesOn: true
+                readonly property string _url: "file:///fs/rwdata/frontguides/switch.json"
+                function _read() {
+                    var x = new XMLHttpRequest();
+                    x.onreadystatechange = function() {
+                        if (x.readyState !== XMLHttpRequest.DONE) return;
+                        frontGuidesSwitch.guidesOn = !/"guides"\s*:\s*false/.test(x.responseText || "");
+                    };
+                    try { x.open("GET", _url); x.send(); } catch (e) {}
+                }
+
+                // Ford's row shows a full-path icon as it is (no state suffix, no day / night folder), so the file is
+                // picked here: on / off, and day / night from the palette Ford's own icons come from (MY20 colours)
+                readonly property bool _day: {
+                    try { return UiTheme.palette.iconPath.indexOf("/day/") >= 0; } catch (e) { return false; }
+                }
+                absolutePathIcon: true
+                icon: "file:///fs/mp/fordhmi/qml/hmirvc/frontguides/guides_" + (guidesOn ? "on" : "off")
+                      + (_day ? "_day.png" : "_night.png")
+                selected: guidesOn
+                active: container.frontView && AL2HMIBridge.rvcSource.multiCamSoftButtons && !container.trgDependency && !speedConditionChmslAux
+                onActiveChanged: if (active) _read()
+                Component.onCompleted: _read()
+                // A tap, and only a tap: SYNC can fire this action by itself as the camera opens. So a trigger counts
+                // only while the row is open (where a finger can reach the button) and not within half a second of
+                // the last one.
+                property real _last: 0
+                onTriggered: {
+                    var now = Date.now();
+                    if (!expButton.expanded || now - _last < 500) return;
+                    _last = now;
+                    guidesOn = !guidesOn
+                    try {
+                        var x = new XMLHttpRequest();
+                        x.open("PUT", _url);
+                        x.send(JSON.stringify({ guides: guidesOn, by: "camera menu" }) + "          ");
+                    } catch (e) {}
+                    expButton.expanded = false
+                }
+            }

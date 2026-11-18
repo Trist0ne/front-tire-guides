@@ -1,0 +1,66 @@
+    // Front Tire Guides on the Front Camera settings page: the same on / off as the button in the camera's own view
+    // row, kept in the same file, /fs/rwdata/frontguides/switch.json ({"guides": false} = off; no file = on).
+    SettingsSwitch {
+        id: frontGuides
+        objectName: "RVCSettings_frontGuides"
+
+        property bool guidesOn: true
+        readonly property string _url: "file:///fs/rwdata/frontguides/switch.json"
+        function _read() {
+            var x = new XMLHttpRequest();
+            x.onreadystatechange = function() {
+                if (x.readyState !== XMLHttpRequest.DONE) return;
+                frontGuides.guidesOn = !/"guides"\s*:\s*false/.test(x.responseText || "");
+            };
+            try { x.open("GET", _url); x.send(); } catch (e) {}
+        }
+        Component.onCompleted: _read()
+        onVisibleChanged: if (visible) _read()
+
+        // on the "Front Camera" page; where that page could not be made, on Ford's camera settings page
+        visible: typeof frontCameraPage === "undefined" || frontCameraPage.front
+        text: typeof frontCameraPage === "undefined" ? "Front Tire Guides" : "Tire Guides"
+        toggled: guidesOn
+        onToggleButtonClicked: {
+            guidesOn = !guidesOn
+            try {
+                var x = new XMLHttpRequest();
+                x.open("PUT", _url);
+                x.send(JSON.stringify({ guides: guidesOn, by: "settings" }) + "          ");   // (padded: a shorter text must cover a longer one)
+            } catch (e) {}
+        }
+        infoButtonVisible: false
+        keepMoreInfoGap: false
+    }
+    // "Lift Offset": Ford's slider, in a file of its own (LiftRow.qml) so that a fault in it leaves only this row
+    // empty. Greyed and not to be moved while the guides are switched off, as Ford's own switches show a row that
+    // does nothing: half as strong.
+    Loader {
+        objectName: "RVCSettings_frontGuidesLift"
+        enabled: frontGuides.guidesOn
+        opacity: enabled ? 1.0 : 0.5
+        visible: typeof frontCameraPage === "undefined" || frontCameraPage.front
+        width: parent.width
+        source: "file:///fs/mp/fordhmi/qml/hmirvc/frontguides/LiftRow.qml"
+    }
+    // "Line Brightness" and "Line Transparency": the same slider twice (LineRow.qml), greyed with the guides off.
+    Loader {
+        objectName: "RVCSettings_frontGuidesBrightness"
+        enabled: frontGuides.guidesOn
+        opacity: enabled ? 1.0 : 0.5
+        visible: typeof frontCameraPage === "undefined" || frontCameraPage.front
+        width: parent.width
+        source: "file:///fs/mp/fordhmi/qml/hmirvc/frontguides/LineRow.qml"
+        onLoaded: { item.title = "Line Brightness"; item.key = "brightness"; item.min = 70; item.max = 100; item.def = 95
+                    item.minText = "Dim"; item.maxText = "Bright"; item.start() }
+    }
+    Loader {
+        objectName: "RVCSettings_frontGuidesTransparency"
+        enabled: frontGuides.guidesOn
+        opacity: enabled ? 1.0 : 0.5
+        visible: typeof frontCameraPage === "undefined" || frontCameraPage.front
+        width: parent.width
+        source: "file:///fs/mp/fordhmi/qml/hmirvc/frontguides/LineRow.qml"
+        onLoaded: { item.title = "Line Transparency"; item.key = "transparency"; item.min = 0; item.max = 50; item.def = 15
+                    item.minText = "Solid"; item.maxText = "Faint"; item.start() }
+    }

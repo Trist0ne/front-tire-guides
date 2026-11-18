@@ -1,0 +1,4 @@
+/* Symbols our programs export to the libraries they load (mc_dl.c): Ford's message library uses g_PasLogParams. */
+{
+    g_PasLogParams;
+};

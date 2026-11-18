@@ -1,0 +1,4 @@
+# built by build.sh
+dist/
+program/guidesd
+.DS_Store

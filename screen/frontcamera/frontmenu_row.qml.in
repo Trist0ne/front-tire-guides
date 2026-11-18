@@ -1,0 +1,14 @@
+    // "Front Camera" in Driver Assistance. SYNC opens its settings pages from a fixed list, so the row opens Ford's
+    // camera settings page with a mark set (front_camera.js); the page then shows our rows under the title "Front
+    // Camera" and hides Ford's. The row itself is a file of its own (FrontCameraRow.qml): a fault in it cannot take
+    // this page down.
+    Loader {
+        objectName: "DriverAssistSettingsMenu_frontCamera"
+        width: parent.width
+        source: "FrontCameraRow.qml"
+    }
+    // Ford's own row opens the page as Ford's
+    Connections {
+        target: rearViewCamera
+        onClicked: FrontCamera.front = false
+    }

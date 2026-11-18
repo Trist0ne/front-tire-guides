@@ -1,0 +1,6 @@
+    // front tire guides layer. Added by the Front Tire Guides installer, removed by its uninstaller.
+    Loader {
+        anchors.fill: parent
+        z: 100
+        source: "file:///fs/mp/fordhmi/qml/hmirvc/frontguides/GuidesLayer.qml"
+    }
