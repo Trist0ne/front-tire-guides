@@ -1,5 +1,5 @@
 /* Ford NS framework message channels: plain C exports of SYNC's /apps/lib/libNS_CoreUnified.so.
- * Signatures read from SYNC 3.4.23188. Return value 0 = OK. */
+ * Signatures read from SYNC 3.4 (the same in builds 22110 to 26057). Return value 0 = OK. */
 #ifndef MC_H
 #define MC_H
 

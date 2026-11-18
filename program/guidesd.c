@@ -32,7 +32,7 @@
 
 /* ---- SYNC's vehicle-data service -------------------------------------------------------------------------------
  * A subscription names messages as bus << 16 | CAN id and how often to send them. Layouts are the service's own
- * structs for SYNC 3.4.23188. */
+ * structs for SYNC 3.4 (the same in builds 22110 to 26057). */
 #define CS_SERVICE "VS_CANShadow"
 #define CS_CMD_SUBSCRIBE 0x543f
 #define CS_EVERY_FRAME 0           /* each frame as it comes off the bus */

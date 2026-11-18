@@ -92,9 +92,9 @@ hmi_block_out() {
 # mod's rows leave the page. Four blocks in two Ford files, and one file of our own beside them.
 FM_DIR=/fs/mp/fordhmi/qml/hmisettings/driverassistance
 FM_MENU=$FM_DIR/DriverAssistSettingsMenu.qml
-FM_MENU_MD5=8635ac0dd1ef6187a0cb825085e19f75     # Ford's stock file, SYNC 3.4.23188
+FM_MENU_MD5=8635ac0dd1ef6187a0cb825085e19f75     # Ford's stock file, SYNC 3.4 22110 to 26057
 FM_PAGE=$FM_DIR/RVCSettings.qml
-FM_PAGE_MD5=4fa73e6c92a6a9818e08e2e5488d30a0     # Ford's stock file, SYNC 3.4.23188
+FM_PAGE_MD5=4fa73e6c92a6a9818e08e2e5488d30a0     # Ford's stock file, SYNC 3.4 22110 to 26057
 FM_JS=$FM_DIR/front_camera.js
 FM_ROW=$FM_DIR/FrontCameraRow.qml
 

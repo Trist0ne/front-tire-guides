@@ -10,7 +10,7 @@ LAUNCHER=/fs/mp/scripts/fmods/front_tire_guides.sh
 MARK=front-tire-guides                                       # marks our line in the startup script
 # Ford's line that launches SYNC's services; our line goes straight after it
 ANCHOR='^on -p 20  *\$GF_ROOT/apps/SS_LaunchProcesses .*&$'
-# Ford's files, and what the stock ones of SYNC 3.4.23188 hash to
+# Ford's files, and what the stock ones hash to (the same in SYNC 3.4 builds 22110 to 26057)
 RVCPOPUP=/fs/mp/fordhmi/qml/hmirvc/RVCPopup.qml
 RVCPOPUP_MD5=4af7d8e09f2ce71b853b154651672511
 VIEWBTNS=/fs/mp/fordhmi/qml/hmirvc/components/CameraViewButtons.qml

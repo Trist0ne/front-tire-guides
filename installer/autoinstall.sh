@@ -1,5 +1,5 @@
 #!/bin/sh
-# Front Tire Guides: USB installer for SYNC 3 build 3.4.23188 with the F-Mods jailbreak (FMods Tools 2.8 or newer).
+# Front Tire Guides: USB installer for SYNC 3.4 (builds 22110 to 26057) with the F-Mods jailbreak (FMods Tools 2.8 or newer).
 # The jailbreak's USB installer runs SyncMyMod/autoinstall.sh from the stick; the line it shows on SYNC's screen is
 # whatever is written to /fs/tmpfs/status ("ERROR ..." in red, "PROGRESS n" for the bar, "REBOOT" to restart).
 #
@@ -63,7 +63,10 @@ fi
 
 # -- checks (nothing changed yet) -------------------------------------------------------------------------------
 progress 5
-grep -q "_3.4.23188_" /fs/mp/Version.inf 2>/dev/null || refuse "Made for SYNC 3 build 3.4.23188 only."
+# the SYNC 3.4 builds this is made for: the parts of Ford's programs and screen files it touches are the same in all of them
+BUILD=""
+for b in 22110 22200 22251 23088 23188 26057; do grep -q "_3.4.${b}_" /fs/mp/Version.inf 2>/dev/null && BUILD=$b; done
+[ -n "$BUILD" ] || refuse "Made for SYNC 3.4 builds 22110, 22200, 22251, 23088, 23188 and 26057 only."
 LINE=$(grep FMODS_TOOLS /fs/rwdata/dev/mods_tools.txt 2>/dev/null)
 [ -n "$LINE" ] || refuse "FMods Tools not found: install the F-Mods jailbreak and FMods Tools first."
 TOOLS=$(echo "$LINE" | awk -F_ '{print $NF}')
