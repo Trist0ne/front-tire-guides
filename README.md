@@ -1,10 +1,14 @@
 # Front Tire Guides
 
-Tire guides on the front camera of a 2021+ Bronco Sport with SYNC 3, in the style of the 2025 model's Trail View: two
-tracks of tread blocks showing where the front tires will go as you turn the wheel, including the part hidden under
-the bumper (drawn in orange). They work in the normal front view and in the 180-degree split view.
+Howdy all,
 
-> Status: pre-release. Built for and driven on one truck. Read "Calibration" before trusting where the guides sit.
+The 2025 Bronco Sport got Trail View: tire guides on the front camera that show where your front tires are headed as
+you turn the wheel. The earlier trucks didn't. This mod adds them to the front camera of a 2021+ Bronco Sport with
+SYNC 3: two tracks of tread blocks that follow the steering, including the bit hidden under the bumper (in orange).
+They work in both the normal front view and the 180 degree split view.
+
+> Status: pre-release. Built for and driven on my 2021 First Edition. Read "Calibration" before you trust where the
+> guides sit.
 
 ## What you need
 
@@ -14,47 +18,47 @@ the bumper (drawn in orange). They work in the normal front view and in the 180-
 
 ## Install
 
-1. Get the stick files: the zip from this repository's [Releases](https://github.com/Trist0ne/front-tire-guides/releases)
-   page, or build them yourself (below). Copy `DONTINDX.MSA` and the `SyncMyMod` folder to the top of an empty
-   FAT32 stick. (One mod per stick: every F-Mods mod uses the folder name `SyncMyMod`.)
-2. With the truck parked and the engine running, plug the stick into SYNC and wait for "installed" on the screen. Do not switch off or
+1. Grab the zip from this repository's [Releases](https://github.com/Trist0ne/front-tire-guides/releases) page (or
+   build it yourself, below). Copy `DONTINDX.MSA` and the `SyncMyMod` folder to the top of an empty FAT32 stick. One
+   mod per stick, since every F-Mods mod uses the same `SyncMyMod` folder name.
+2. Truck PARKED, engine running. Plug the stick into SYNC and wait for "installed" on the screen. Don't switch off or
    pull the stick before that.
-3. Pull the stick. SYNC restarts.
+3. Pull the stick. SYNC restarts and you're done.
 
-To remove it, do the same with the uninstall folder (`./build.sh --uninstall`, or set `UNINSTALL=1` in
-`SyncMyMod/install.conf`). SYNC's files are put back exactly as they were.
+To remove it, same deal with the uninstall zip. SYNC's files are put back exactly how they were. (Building it
+yourself: `./build.sh --uninstall`, or set `UNINSTALL=1` in `SyncMyMod/install.conf`.)
 
 ## Using it
 
-- **In the camera view:** the menu button at the top left of the camera picture has a Tire Guides button on front
-  views. Lit = on.
+- **In the camera view:** tap the menu button at the top left of the camera picture; there's a Tire Guides button on
+  the front views. Lit means on.
 - **Settings > Vehicle > Driver Assistance > Front Camera:**
   - *Tire Guides*: the same on / off.
-  - *Lift Offset*: how much taller than stock the truck sits, from Stock to +4 inches in quarter-inch steps.
-  - *Line Brightness*: from light grey (70%) to full white (100%); 95% by default.
-  - *Line Transparency*: how much of the ground shows through the lines, from solid (0%) to 50%; 15% by default.
+  - *Lift Offset*: how much taller than stock your truck sits, from Stock to +4 inches in quarter-inch steps.
+  - *Line Brightness*: from light grey (70%) to full white (100%); 95% to start.
+  - *Line Transparency*: how much of the ground shows through the lines, from solid (0%) to 50%; 15% to start.
 
-The guides are available a few seconds after SYNC starts. For the first minute or so after a start SYNC is busy
-launching its other programs, and the guides can hitch slightly; after that they follow the wheel smoothly.
+The guides show up a few seconds after SYNC starts. For the first minute or so SYNC is busy launching everything else,
+so they can hitch a little; after that they track the wheel smoothly.
 
 ![The guides' rows on the Front Camera settings page (a render, not a photo)](docs/settings.png)
 
 ## Calibration
 
-Where the guides sit depends on a calibration of the camera (`calibration/frontcam.json`): its height, tilt and lens.
-The one shipped was measured on a single First Edition truck with a 1.75 inch lift and 235/65R17 tires, using tape
-lines on the ground. For other heights the Lift Offset slider moves the camera's height in the arithmetic; nothing
-else changes.
+Where the guides land depends on a calibration of the camera (`calibration/frontcam.json`): its height, tilt and
+lens. The one included was measured on my truck, a First Edition with a 1.75 inch lift on 235/65R17s, using tape lines
+on the ground. For other heights the Lift Offset slider moves the camera height in the math; nothing else changes.
 
-**That makes the stock-height and other-lift positions an extrapolation that has not been checked on another truck.**
-Before relying on the guides near an obstacle, check them: put a bottle on the ground just ahead of a front tire,
-steer at it, and see that the guide passes over it. If your camera sits differently you can measure your own
-calibration: `calibration/calibrate.js` explains how (ground marks at known positions, read off a photo of the screen).
+That makes stock height and other lifts an educated guess that hasn't been checked on another truck yet. CHECK THEM
+ON YOUR TRUCK BEFORE YOU RELY ON THEM: put a water bottle on the ground just ahead of a front tire, steer at it, and
+make sure the guide runs over it. If your camera sits differently you can measure your own calibration;
+`calibration/calibrate.js` walks you through it (marks on the ground at known spots, read off a photo of the screen).
+If you do, open an issue with your numbers so other setups can benefit.
 
 ## If something goes wrong
 
-- **Switch it off:** Tire Guides off (camera view or settings page) and nothing is drawn.
-- **Remove it:** the uninstall stick puts Ford's files back exactly as they were.
+- **Turn them off:** Tire Guides off (camera view or settings page) and nothing gets drawn.
+- **Remove it:** the uninstall stick puts Ford's files back exactly how they were.
 
 ## See also
 
@@ -104,8 +108,8 @@ No Ford software is included here.
 
 ## Support
 
-This mod is free. If it is useful to you and you would like to say thanks, you can leave a tip at
-[ko-fi.com/trist0n](https://ko-fi.com/trist0n). Entirely optional.
+This is free. If it saved you a bumper (or just some annoyance) and you want to buy me a coffee, there's a tip jar at
+[ko-fi.com/trist0n](https://ko-fi.com/trist0n). Totally optional, and thanks either way!
 
 ## Disclaimer
 
