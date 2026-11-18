@@ -9,8 +9,8 @@ is drawn in orange. They work in the normal front view and the 180 degree split 
 
 ## What you need
 
-- A Bronco Sport with the factory front camera and SYNC 3.4, build **22110, 22200, 22251, 23088, 23188 or 26057** (Settings >
-  General > About SYNC). The installer refuses any other.
+- A Bronco Sport with the factory front camera and SYNC 3.4. Compatible builds: **22110, 22200, 22251, 23088, 23188
+  and 26057**. Your build is under Settings > General > About SYNC.
 - The F-Mods jailbreak with **FMods Tools 2.8 or newer**.
 - A FAT32 USB stick.
 
@@ -50,6 +50,15 @@ and the guides can stutter a little. After that they follow the wheel smoothly.
 The guides are drawn from measurements of the camera's height, tilt and lens, taken on my First Edition with a 1.75
 inch lift and 235/65R17 tires. The mod works out the rest for other heights, so all you need to do is set Lift Offset
 to how much your truck is lifted. On a stock truck, leave it on Stock.
+
+## Compatibility
+
+Front Tire Guides has run on my truck on SYNC 3.4.23188. Builds 22110, 22200, 22251, 23088 and 26057 were emulated:
+Ford's own files for each build were compared with 23188's, and the parts the mod uses are the same in all of them.
+They haven't been on a truck yet, so if you're on one of them, let me know how it goes.
+
+Other 3.4 builds will probably work too. The installer only edits Ford files that match the stock ones it expects, and
+stops without changing anything if one doesn't.
 
 ## If something goes wrong
 

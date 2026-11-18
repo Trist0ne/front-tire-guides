@@ -12,7 +12,7 @@ for kind in install uninstall; do
     if [ $kind = install ]; then sh "$here/build.sh" "$dir" > /dev/null; zip=$out/front-tire-guides-$v.zip
     else sh "$here/build.sh" "$dir" --uninstall > /dev/null; zip=$out/front-tire-guides-$v-uninstall.zip; fi
     cat > "$dir/READ ME.txt" <<TXT
-Front Tire Guides $v ($kind) for SYNC 3.4 (builds 22110, 22200, 22251, 23088, 23188 and 26057) with the F-Mods jailbreak (FMods Tools 2.8 or newer).
+Front Tire Guides $v ($kind) for SYNC 3.4 (made for builds 22110, 22200, 22251, 23088, 23188 and 26057) with the F-Mods jailbreak (FMods Tools 2.8 or newer).
 
 1. Copy DONTINDX.MSA and the SyncMyMod folder to the top of an empty FAT32 USB stick. One mod per stick.
 2. With the truck parked and the engine running, plug the stick into SYNC and wait for the message that it is done.
