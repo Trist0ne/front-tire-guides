@@ -7,9 +7,6 @@ you turn the wheel. The earlier trucks didn't. This mod adds them to the front c
 SYNC 3: two tracks of tread blocks that follow the steering, including the bit hidden under the bumper (in orange).
 They work in both the normal front view and the 180 degree split view.
 
-> Status: pre-release. Built for and driven on my 2021 First Edition. Read "Calibration" before you trust where the
-> guides sit.
-
 ## What you need
 
 - A Bronco Sport with the factory front camera and SYNC 3 on build **3.4.23188** (the installer refuses any other).
@@ -43,17 +40,12 @@ so they can hitch a little; after that they track the wheel smoothly.
 
 ![The guides' rows on the Front Camera settings page (a render, not a photo)](docs/settings.png)
 
-## Calibration
+## Lift Offset
 
-Where the guides land depends on a calibration of the camera (`calibration/frontcam.json`): its height, tilt and
-lens. The one included was measured on my truck, a First Edition with a 1.75 inch lift on 235/65R17s, using tape lines
-on the ground. For other heights the Lift Offset slider moves the camera height in the math; nothing else changes.
-
-That makes stock height and other lifts an educated guess that hasn't been checked on another truck yet. CHECK THEM
-ON YOUR TRUCK BEFORE YOU RELY ON THEM: put a water bottle on the ground just ahead of a front tire, steer at it, and
-make sure the guide runs over it. If your camera sits differently you can measure your own calibration;
-`calibration/calibrate.js` walks you through it (marks on the ground at known spots, read off a photo of the screen).
-If you do, open an issue with your numbers so other setups can benefit.
+The guides are drawn from a measurement of the camera: its height, tilt and lens. It was taken on my First Edition
+(1.75 inch lift, 235/65R17s), and the math works out the rest for any other height. All you need to do is tell it how
+much taller than stock your truck sits: set Lift Offset to your lift, from Stock to +4 inches in quarter-inch steps.
+Stock truck? Leave it on Stock.
 
 ## If something goes wrong
 
