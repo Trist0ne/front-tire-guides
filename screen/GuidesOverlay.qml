@@ -34,6 +34,24 @@ Item {
     readonly property real xrayBright: Math.min(1, bright / 0.95)     // the orange as it is at the standard, dimmer below
 
     property real sw: 0                    // the steering drawn, set on every frame of the screen
+    // The turn that steering makes, worked out here with each new value and handed to the strips: its side (-1 left,
+    // 0 straight, 1 right), the radius at the middle of the rear axle and at the middle of the front. In the shader
+    // these few lines cost SYNC's graphics compiler about four fifths of its time at the first opening.
+    property real turnSide: 0
+    property real turnR: 0
+    property real turnRf: 1
+    onSwChanged: turn()
+    function turn() {
+        var L = look;
+        if (!L) return;
+        var d = L.dlock * Math.max(-1, Math.min(1, sw / L.lock)), side = 0, R = 0, Rf = 1;
+        if (Math.abs(d) >= 0.15) {
+            R = L.L / Math.tan(Math.abs(d) * Math.PI / 180);
+            side = d > 0 ? 1 : -1;
+            Rf = Math.sqrt(R * R + L.L * L.L);
+        }
+        turnR = R; turnRf = Rf; turnSide = side;
+    }
     property bool have: false              // a steering value has come
     property bool resting: false           // the newest value is drawn as it is: nothing to do until the next
 
@@ -84,6 +102,7 @@ Item {
             cam(L.cams[2], true, L.div[0], L.div[1]);
             cam(L.cams[3], true, L.div[1], L.w);
         }
+        turn();
         guides = list;
         warm = true; warmth.restart();
     }
@@ -167,9 +186,11 @@ Item {
         uniform highp mat4 qt_Matrix;
         attribute highp vec4 qt_Vertex;
         attribute highp vec2 qt_MultiTexCoord0;
-        uniform highp float sw;
         uniform highp float live;
-        uniform highp vec3 truck;
+        uniform highp float wb;
+        uniform highp float turnSide;
+        uniform highp float turnR;
+        uniform highp float turnRf;
         uniform highp float xt;
         uniform highp vec4 rng;
         uniform highp vec3 camPos;
@@ -214,18 +235,12 @@ Item {
             highp float vx = px - cx;
             highp float c = cos(th);
             highp float sn = sin(th);
-            return vec2(cx + vx * c - truck.x * sn, vx * sn + truck.x * c - truck.x);
+            return vec2(cx + vx * c - wb * sn, vx * sn + wb * c - wb);
         }
         void main() {
-            highp float d = truck.z * clamp(sw / truck.y, -1.0, 1.0);
-            highp float sg = 0.0;
-            highp float R = 0.0;
-            highp float Rf = 1.0;
-            if (abs(d) >= 0.15) {
-                R = truck.x / tan(abs(d) * 0.017453292519943295);
-                sg = d > 0.0 ? 1.0 : -1.0;
-                Rf = sqrt(R * R + truck.x * truck.x);
-            }
+            highp float sg = turnSide;
+            highp float R = turnR;
+            highp float Rf = turnRf;
             highp vec3 cl = col(qt_MultiTexCoord0.x);
             highp float across = cl.x;
             pf = cl.yz;
@@ -257,10 +272,12 @@ Item {
                 id: fx
                 x: -pane.x; width: tp.width; height: tp.height
                 mesh: GridMesh { resolution: Qt.size(tp.meshCols, 96) }
-                // the steering, the truck (wheelbase, the wheel's lock, the road wheels' lock), this tire's middle
-                property real sw: tp.sw
+                // the turn (tp.turn()), the wheelbase, this tire's middle
+                property real turnSide: tp.turnSide
+                property real turnR: tp.turnR
+                property real turnRf: tp.turnRf
                 property real live: pane.on ? 1 : 0
-                property vector3d truck: Qt.vector3d(pane.k.L, pane.k.lock, pane.k.dlock)
+                property real wb: pane.k.L
                 property real xt: pane.e.side * pane.k.tf / 2
                 // the strip: across the tire from 3 cm inside it to 3 cm past the rail, along from the first block
                 // under the bumper to the last block's end
